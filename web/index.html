@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <!-- ✅ BASE -->
+  $FLUTTER_BASE_HREF
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <meta name="description" content="Device Trust App">
+
+  <!-- ✅ ICONS -->
+  <link rel="icon" type="image/png" href="icons/Icon-192.png">
+  <link rel="icon" type="image/png" href="favicon.png">
+
+  <title>Device Trust</title>
+  <link rel="manifest" href="manifest.json">
+
+  <!-- ✅ GOOGLE MAPS -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDloe8nxKKFyjIC1FJbORMxr9VDgLqBKPk"></script>
+
+  <!-- ✅ STYLES -->
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background: #0B1220;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+    }
+
+    .loader {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+    }
+
+    .center-stack {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* ✅ DEFAULT (DESKTOP FIRST) */
+
+    .ring {
+      position: absolute;
+      width: 90vw;
+      height: 90vw;
+      max-width: 720px;
+      max-height: 720px;
+      border-radius: 50%;
+      border: 3px solid rgba(56,189,248,0.2);
+      animation: spin 16s linear infinite;
+    }
+
+    .ring-inner {
+      position: absolute;
+      width: 70vw;
+      height: 70vw;
+      max-width: 520px;
+      max-height: 520px;
+      border-radius: 50%;
+      border: 2px solid rgba(168,85,247,0.12);
+      animation: spinReverse 16s linear infinite;
+    }
+
+    .glow {
+      position: absolute;
+      width: 75vw;
+      height: 75vw;
+      max-width: 580px;
+      max-height: 580px;
+      border-radius: 50%;
+      background: rgba(59,130,246,0.04);
+    }
+
+    .logo-wrapper {
+      width: 45vw;
+      height: 45vw;
+      max-width: 360px;
+      max-height: 360px;
+
+      border-radius: 50%;
+      background: rgba(255,255,255,0.08);
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      animation: spinSafe 20s linear infinite;
+      will-change: transform;
+    }
+
+    .logo-wrapper img {
+      width: 85%;
+      height: 85%;
+      object-fit: contain;
+    }
+
+    .title {
+      color: white;
+      font-size: 22px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      opacity: 0.9;
+    }
+
+    /* ✅ ✅ MOBILE ADAPTATION */
+    @media (hover: none) and (pointer: coarse) {
+
+      .ring {
+        width: 80vw;
+        height: 80vw;
+        animation: spin 20s linear infinite;
+      }
+
+      .ring-inner {
+        width: 60vw;
+        height: 60vw;
+        animation: spinReverse 20s linear infinite;
+      }
+
+      .glow {
+        width: 65vw;
+        height: 65vw;
+      }
+
+      .logo-wrapper {
+        width: 55vw;
+        height: 55vw;
+        animation: spinSafe 26s linear infinite;
+      }
+
+      .title {
+        font-size: 18px;
+      }
+    }
+
+    /* ✅ ANIMATIONS */
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes spinReverse {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(-360deg); }
+    }
+
+    @keyframes spinSafe {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <div class="loader" id="loader">
+
+    <div class="center-stack">
+      <div class="ring"></div>
+      <div class="ring-inner"></div>
+      <div class="glow"></div>
+
+      <!-- ✅ LOGO -->
+      <div class="logo-wrapper">
+        <img src="assets/images/device_trust_logo.png" />
+      </div>
+    </div>
+
+    <div class="title">Device Trust</div>
+
+  </div>
+
+  <!-- ✅ FLUTTER -->
+  <script src="flutter_bootstrap.js" async></script>
+
+  <!-- ✅ HANDOFF -->
+  <script>
+    window.addEventListener('flutter-first-frame', function () {
+      const loader = document.getElementById('loader');
+      if (loader) {
+        loader.style.transition = 'opacity 0.5s ease';
+        loader.style.opacity = '0';
+        setTimeout(() => loader.remove(), 500);
+      }
+    });
+  </script>
+
+</body>
+</html>

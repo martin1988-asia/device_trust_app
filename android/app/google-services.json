@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "368293262949",
+    "firebase_url": "https://devicetrustapp-default-rtdb.firebaseio.com",
+    "project_id": "devicetrustapp",
+    "storage_bucket": "devicetrustapp.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:368293262949:android:51e9aea035690ed89ff88c",
+        "android_client_info": {
+          "package_name": "com.example.device_trust_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBh_ktYwKy9thhR1Qx016iFhlZOtaUWTcM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
