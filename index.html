@@ -3,7 +3,7 @@
 <head>
 
   <!-- ✅ BASE -->
-  <base href="/device_trust_app/">
+  /device_trust_app/
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
@@ -14,7 +14,7 @@
   <meta name="description" content="Device Trust App">
 
   <!-- ✅ ICONS -->
-  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+  <link rel="icon" type="image/png" href="icons/Icon-192.png">
   <link rel="icon" type="image/png" href="favicon.png">
 
   <title>Device Trust</title>
@@ -23,7 +23,7 @@
   <!-- ✅ GOOGLE MAPS -->
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDloe8nxKKFyjIC1FJbORMxr9VDgLqBKPk"></script>
 
-  <!-- ✅ STYLE -->
+  <!-- ✅ STYLES -->
   <style>
     html, body {
       margin: 0;
@@ -35,16 +35,13 @@
       align-items: center;
       overflow: hidden;
       font-family: Arial, sans-serif;
-
-      /* ✅ enable 3D perspective */
-      perspective: 1000px;
     }
 
     .loader {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 50px;
+      gap: 30px;
     }
 
     .center-stack {
@@ -54,46 +51,46 @@
       align-items: center;
     }
 
-    /* ✅ BIG RINGS */
+    /* ✅ DEFAULT (DESKTOP FIRST) */
+
     .ring {
       position: absolute;
       width: 90vw;
       height: 90vw;
-      max-width: 800px;
-      max-height: 800px;
+      max-width: 720px;
+      max-height: 720px;
       border-radius: 50%;
-      border: 4px solid rgba(56,189,248,0.2);
-      animation: spin 12s linear infinite;
+      border: 3px solid rgba(56,189,248,0.2);
+      animation: spin 16s linear infinite;
     }
 
     .ring-inner {
       position: absolute;
       width: 70vw;
       height: 70vw;
-      max-width: 600px;
-      max-height: 600px;
+      max-width: 520px;
+      max-height: 520px;
       border-radius: 50%;
-      border: 3px solid rgba(168,85,247,0.15);
-      animation: spinReverse 12s linear infinite;
+      border: 2px solid rgba(168,85,247,0.12);
+      animation: spinReverse 16s linear infinite;
     }
 
-    /* ✅ CALM STATIC GLOW (NO PULSE ✅) */
     .glow {
       position: absolute;
       width: 75vw;
       height: 75vw;
-      max-width: 650px;
-      max-height: 650px;
+      max-width: 580px;
+      max-height: 580px;
       border-radius: 50%;
-      background: rgba(59,130,246,0.05);
+      background: rgba(59,130,246,0.04);
     }
 
-    /* ✅ 3D CONTAINER */
     .logo-wrapper {
-      width: 50vw;
-      height: 50vw;
-      max-width: 500px;
-      max-height: 500px;
+      width: 45vw;
+      height: 45vw;
+      max-width: 360px;
+      max-height: 360px;
+
       border-radius: 50%;
       background: rgba(255,255,255,0.08);
 
@@ -101,11 +98,8 @@
       justify-content: center;
       align-items: center;
 
-      z-index: 2;
-
-      /* ✅ 3D rotation */
-      transform-style: preserve-3d;
-      animation: rotate3D 18s linear infinite;
+      animation: spinSafe 20s linear infinite;
+      will-change: transform;
     }
 
     .logo-wrapper img {
@@ -116,12 +110,44 @@
 
     .title {
       color: white;
-      font-size: 30px;
+      font-size: 22px;
       font-weight: bold;
-      letter-spacing: 3px;
+      letter-spacing: 2px;
+      opacity: 0.9;
     }
 
-    /* ✅ BACKGROUND ROTATION */
+    /* ✅ ✅ MOBILE ADAPTATION */
+    @media (hover: none) and (pointer: coarse) {
+
+      .ring {
+        width: 80vw;
+        height: 80vw;
+        animation: spin 20s linear infinite;
+      }
+
+      .ring-inner {
+        width: 60vw;
+        height: 60vw;
+        animation: spinReverse 20s linear infinite;
+      }
+
+      .glow {
+        width: 65vw;
+        height: 65vw;
+      }
+
+      .logo-wrapper {
+        width: 55vw;
+        height: 55vw;
+        animation: spinSafe 26s linear infinite;
+      }
+
+      .title {
+        font-size: 18px;
+      }
+    }
+
+    /* ✅ ANIMATIONS */
     @keyframes spin {
       from { transform: rotate(0deg); }
       to { transform: rotate(360deg); }
@@ -132,14 +158,11 @@
       to { transform: rotate(-360deg); }
     }
 
-    /* ✅ 🎬 3D ANIMATION */
-    @keyframes rotate3D {
-      0%   { transform: rotateY(0deg) rotateX(5deg); }
-      25%  { transform: rotateY(90deg) rotateX(8deg); }
-      50%  { transform: rotateY(180deg) rotateX(5deg); }
-      75%  { transform: rotateY(270deg) rotateX(8deg); }
-      100% { transform: rotateY(360deg) rotateX(5deg); }
+    @keyframes spinSafe {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
     }
+
   </style>
 
 </head>
@@ -171,9 +194,9 @@
     window.addEventListener('flutter-first-frame', function () {
       const loader = document.getElementById('loader');
       if (loader) {
-        loader.style.transition = 'opacity 0.6s ease';
+        loader.style.transition = 'opacity 0.5s ease';
         loader.style.opacity = '0';
-        setTimeout(() => loader.remove(), 600);
+        setTimeout(() => loader.remove(), 500);
       }
     });
   </script>
