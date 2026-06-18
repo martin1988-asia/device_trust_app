@@ -53,13 +53,13 @@ class _ImeiBenefitsPageState extends State<ImeiBenefitsPage>
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
-          color: Colors.white.withOpacity(0.04),
+          color: Colors.white.withValues(alpha: 0.04),
           border: Border.all(
-            color: Colors.white.withOpacity(0.08),
+            color: Colors.white.withValues(alpha: 0.08),
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.4),
+              color: Colors.black.withValues(alpha: 0.4),
               blurRadius: 20,
               offset: const Offset(0, 8),
             )
@@ -73,7 +73,7 @@ class _ImeiBenefitsPageState extends State<ImeiBenefitsPage>
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: Colors.blueAccent.withOpacity(0.15),
+                color: Colors.blueAccent.withValues(alpha: 0.15),
               ),
               child: Icon(icon, color: Colors.blueAccent, size: 20),
             ),

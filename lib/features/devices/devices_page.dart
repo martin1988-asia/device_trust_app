@@ -3,7 +3,6 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart' as latlng;
 import 'package:geolocator/geolocator.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter/foundation.dart';
 import 'dart:async';
 import 'dart:math' as math;
 
@@ -34,7 +33,7 @@ class _DevicesPageState extends State<DevicesPage> {
 
   StreamSubscription<Position>? _positionStream;
 
-  List<UserModel> _circleUsers = [];
+  final List<UserModel> _circleUsers = [];
 
   bool _isLocateHover = false;
   bool _isStopHover = false;
@@ -267,137 +266,190 @@ class _DevicesPageState extends State<DevicesPage> {
                       ),
                     ],
                   ),
-                  child: Column(
+                  child: SingleChildScrollView(
+                    child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       // =====================================================
                       // ✅ PREMIUM HEADER
                       // =====================================================
-                      Row(
-                        children: [
-                          // ✅ LEFT ICON (IMPROVED)
-                          Container(
-                            padding: const EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                              color: Colors.blue.withValues(alpha: 0.15),
-                              shape: BoxShape.circle,
-                            ),
-                            child: const Icon(
-                              Icons.devices,
-                              color: Color(0xFF38BDF8),
-                            ),
-                          ),
+                      LayoutBuilder(
+                        builder: (context, constraints) {
+                          final isMobile = constraints.maxWidth < 600;
 
-                          const SizedBox(width: 12),
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  // ✅ LEFT ICON (IMPROVED)
+                                  Container(
+                                    padding: const EdgeInsets.all(10),
+                                    decoration: BoxDecoration(
+                                      color:
+                                          Colors.blue.withValues(alpha: 0.15),
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: const Icon(
+                                      Icons.devices,
+                                      color: Color(0xFF38BDF8),
+                                    ),
+                                  ),
 
-                          // ✅ TITLE BLOCK
-                          const Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Device Trust",
-                                  style: TextStyle(
-                                    color: Colors.white54,
-                                    fontSize: 12,
+                                  const SizedBox(width: 12),
+
+                                  // ✅ TITLE BLOCK (SAFE FOR MOBILE)
+                                  const Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "Device Trust",
+                                          style: TextStyle(
+                                            color: Colors.white54,
+                                            fontSize: 12,
+                                          ),
+                                        ),
+                                        Text(
+                                          "My Devices",
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                            fontSize: 22,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                                Text(
-                                  "My Devices",
-                                  style: TextStyle(
-                                    fontSize: 22,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                  ),
+                                
+
+                                  // ✅ DESKTOP ONLY ACTIONS
+                                  if (!isMobile)
+                                    Flexible(
+                                      child: Wrap(
+                                        spacing: 10,
+                                        runSpacing: 6,
+                                        alignment: WrapAlignment.end,
+                                        children: [
+                                          _headerAction(
+                                            icon: Icons.storefront,
+                                            tooltip: "Marketplace",
+                                            onTap: () {
+                                              Navigator.pushNamed(
+                                                context,
+                                                '/marketplace',
+                                              );
+                                            },
+                                          ),
+                                          _headerAction(
+                                            icon: Icons.refresh,
+                                            tooltip: "Refresh",
+                                            onTap: _loadDevices,
+                                          ),
+                                          _headerAction(
+                                            icon: Icons.group_add,
+                                            tooltip: "Create Family",
+                                            onTap: _createFamily,
+                                          ),
+                                          _headerAction(
+                                            icon: Icons.person_add,
+                                            tooltip: "Join Family",
+                                            onTap: _showJoinDialog,
+                                          ),
+                                          _headerAction(
+                                            icon: Icons.logout,
+                                            tooltip: "Logout",
+                                            onTap: _confirmLogout,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                ],
+                              ),
+
+                              // ✅ MOBILE ACTIONS (CLEAN SEPARATE ROW)
+                              if (isMobile) ...[
+                                const SizedBox(height: 12),
+                                Wrap(
+                                  spacing: 12,
+                                  runSpacing: 8,
+                                  children: [
+                                    _headerAction(
+                                      icon: Icons.storefront,
+                                      tooltip: "Market",
+                                      onTap: () {
+                                        Navigator.pushNamed(
+                                          context,
+                                          '/marketplace',
+                                        );
+                                      },
+                                    ),
+                                    _headerAction(
+                                      icon: Icons.refresh,
+                                      tooltip: "Refresh",
+                                      onTap: _loadDevices,
+                                    ),
+                                    _headerAction(
+                                      icon: Icons.group_add,
+                                      tooltip: "Create",
+                                      onTap: _createFamily,
+                                    ),
+                                    _headerAction(
+                                      icon: Icons.person_add,
+                                      tooltip: "Join",
+                                      onTap: _showJoinDialog,
+                                    ),
+                                    _headerAction(
+                                      icon: Icons.logout,
+                                      tooltip: "Logout",
+                                      onTap: _confirmLogout,
+                                    ),
+                                  ],
                                 ),
                               ],
-                            ),
-                          ),
-
-                          const Spacer(),
-
-                          // ✅ ACTION BUTTONS (UPGRADED 🔥)
-                          SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Row(
-                              children: [
-                                _headerAction(
-                                  icon: Icons.storefront,
-                                  tooltip: "Marketplace",
-                                  onTap: () {
-                                    Navigator.pushNamed(
-                                      context,
-                                      '/marketplace',
-                                    );
-                                  },
-                                ),
-                                const SizedBox(width: 8),
-                                _headerAction(
-                                  icon: Icons.refresh,
-                                  tooltip: "Refresh",
-                                  onTap: _loadDevices,
-                                ),
-                                const SizedBox(width: 8),
-                                _headerAction(
-                                  icon: Icons.group_add,
-                                  tooltip: "Create Family",
-                                  onTap: _createFamily,
-                                ),
-                                const SizedBox(width: 8),
-                                _headerAction(
-                                  icon: Icons.person_add,
-                                  tooltip: "Join Family",
-                                  onTap: _showJoinDialog,
-                                ),
-                                const SizedBox(width: 8),
-                                _headerAction(
-                                  icon: Icons.logout,
-                                  tooltip: "Logout",
-                                  onTap: _confirmLogout,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
+                            ],
+                          );
+                        },
                       ),
 
-                      const SizedBox(height: 20),
+                        const SizedBox(height: 20),
 
+                      // =====================================================
                       // ✅ ACTION BUTTONS (MOBILE RESPONSIVE ✅)
                       // =====================================================
                       MediaQuery.of(context).size.width < 600
-                          ? Column(
+                          ? Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                SizedBox(
-                                  width: double.infinity,
-                                  child: _actionButton(
-                                    label: "Locate Me",
-                                    icon: Icons.my_location,
-                                    isHover: _isLocateHover,
-                                    onEnter: () =>
-                                        setState(() => _isLocateHover = true),
-                                    onExit: () =>
-                                        setState(() => _isLocateHover = false),
-                                    onTap: _getLocation,
-                                    gradient: const [
-                                      Color(0xFF2563EB),
-                                      Color(0xFF38BDF8),
-                                    ],
-                                  ),
+                                _actionButton(
+                                  label: "Locate",
+                                  icon: Icons.my_location,
+                                  isHover: _isLocateHover,
+                                  onEnter: () =>
+                                      setState(() => _isLocateHover = true),
+                                  onExit: () =>
+                                      setState(() => _isLocateHover = false),
+                                  onTap: _getLocation,
+                                  gradient: const [
+                                    Color(0xFF2563EB),
+                                    Color(0xFF38BDF8),
+                                  ],
+                                  compact: true, // ✅ NEW
                                 ),
-                                const SizedBox(height: 12),
-                                SizedBox(
-                                  width: double.infinity,
-                                  child: _outlinedActionButton(
-                                    label: "Stop",
-                                    icon: Icons.stop_circle,
-                                    isHover: _isStopHover,
-                                    onEnter: () =>
-                                        setState(() => _isStopHover = true),
-                                    onExit: () =>
-                                        setState(() => _isStopHover = false),
-                                    onTap: _stopTracking,
-                                  ),
+                                const SizedBox(width: 12),
+                                _outlinedActionButton(
+                                  label: "Stop",
+                                  icon: Icons.stop_circle,
+                                  isHover: _isStopHover,
+                                  onEnter: () =>
+                                      setState(() => _isStopHover = true),
+                                  onExit: () =>
+                                      setState(() => _isStopHover = false),
+                                  onTap: _stopTracking,
+                                  compact: true, // ✅ NEW
                                 ),
                               ],
                             )
@@ -453,6 +505,7 @@ class _DevicesPageState extends State<DevicesPage> {
                       // =====================================================
                       // ✅ PREMIUM FAMILY MAP CARD (REAL-TIME ✅)
                       // =====================================================
+
                       SizedBox(
                         height: 220,
                         child: Container(
@@ -534,14 +587,15 @@ class _DevicesPageState extends State<DevicesPage> {
 
                                             final markers = docs
                                                 .map((doc) {
-                                                  final data = doc.data()
-                                                      as Map<String, dynamic>;
+                                                  final data = doc.data();
 
                                                   final lat = data['lat'];
                                                   final lng = data['lng'];
 
                                                   if (lat == null ||
-                                                      lng == null) return null;
+                                                      lng == null) {
+                                                    return null;
+                                                  }
 
                                                   final rawName =
                                                       nameMap[doc.id] ?? "User";
@@ -893,7 +947,7 @@ class _DevicesPageState extends State<DevicesPage> {
 
                       // ✅ DEVICE LIST CONTAINER (FIXED FLOW ✅)
                       SizedBox(
-                        height: 450,
+                        height: 350,
                         child: Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(16),
@@ -917,13 +971,15 @@ class _DevicesPageState extends State<DevicesPage> {
               ),
             ),
           ),
-
+          ), 
+          
           // ✅ FLOAT BUTTON
           Positioned(bottom: 20, right: 20, child: _buildAddButton(context)),
         ],
       ),
     );
   }
+
 
   // =====================================================
   // ✅ PREMIUM EMPTY STATE (UPGRADED ✅)
@@ -1005,16 +1061,16 @@ class _DevicesPageState extends State<DevicesPage> {
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: [
-                  Colors.white.withOpacity(0.08),
-                  Colors.white.withOpacity(0.03),
+                  Colors.white.withValues(alpha: 0.08),
+                  Colors.white.withValues(alpha: 0.03),
                 ],
               ),
 
-              border: Border.all(color: Colors.white.withOpacity(0.08)),
+              border: Border.all(color: Colors.white.withValues(alpha: 0.08)),
 
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.55),
+                  color: Colors.black.withValues(alpha: 0.55),
                   blurRadius: 18,
                   offset: const Offset(0, 8),
                 ),
@@ -1031,7 +1087,7 @@ class _DevicesPageState extends State<DevicesPage> {
                     Container(
                       padding: const EdgeInsets.all(8),
                       decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.05),
+                        color: Colors.white.withValues(alpha: 0.05),
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: const Icon(
@@ -1157,9 +1213,9 @@ class _DevicesPageState extends State<DevicesPage> {
                           ),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(12),
-                            color: color.withOpacity(0.15),
+                            color: color.withValues(alpha: 0.15),
                             border: Border.all(
-                              color: color.withOpacity(0.5),
+                              color: color.withValues(alpha: 0.5),
                             ),
                           ),
                           child: Row(
@@ -1653,19 +1709,38 @@ class _DevicesPageState extends State<DevicesPage> {
     required VoidCallback onTap,
     required String tooltip,
   }) {
-    return Tooltip(
-      message: tooltip,
-      child: GestureDetector(
-        onTap: onTap,
-        child: Container(
-          padding: const EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            color: Colors.white.withValues(alpha: 0.05),
-            border: Border.all(color: Colors.white.withValues(alpha: 0.08)),
+    return GestureDetector(
+      onTap: onTap,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              color: Colors.white.withValues(alpha: 0.06),
+              border: Border.all(
+                color: Colors.white.withValues(alpha: 0.1),
+              ),
+            ),
+            child: Icon(
+              icon,
+              color: Colors.white,
+              size: 22, // ✅ bigger icon (fixes tiny issue)
+            ),
           ),
-          child: Icon(icon, color: Colors.white70, size: 18),
-        ),
+
+          const SizedBox(height: 4),
+
+          // ✅ LABEL — THIS IS THE BIG UX FIX
+          Text(
+            tooltip,
+            style: const TextStyle(
+              color: Colors.white70,
+              fontSize: 10,
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -1682,6 +1757,7 @@ class _DevicesPageState extends State<DevicesPage> {
     required bool isHover,
     required VoidCallback onEnter,
     required VoidCallback onExit,
+    bool compact = false, // ✅ NEW
   }) {
     return MouseRegion(
       onEnter: (_) => onEnter(),
@@ -1692,19 +1768,30 @@ class _DevicesPageState extends State<DevicesPage> {
           duration: const Duration(milliseconds: 220),
           curve: Curves.easeOutCubic,
           transform: Matrix4.identity()..scale(isHover ? 1.05 : 1.0),
-          padding: const EdgeInsets.symmetric(vertical: 14),
+
+          // ✅ IMPORTANT FIX FOR MOBILE SIZE
+          padding: EdgeInsets.symmetric(
+            vertical: compact ? 10 : 14,
+            horizontal: compact ? 16 : 0,
+          ),
+
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(14),
             gradient: LinearGradient(colors: gradient),
             boxShadow: [
               BoxShadow(
-                color: gradient.first.withValues(alpha: isHover ? 0.7 : 0.4),
+                color: gradient.first.withValues(
+                  alpha: isHover ? 0.7 : 0.4,
+                ),
                 blurRadius: isHover ? 22 : 14,
                 offset: const Offset(0, 6),
               ),
             ],
           ),
+
           child: Row(
+            mainAxisSize:
+                compact ? MainAxisSize.min : MainAxisSize.max, // ✅ KEY FIX
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(icon, color: Colors.white, size: 18),
@@ -1734,6 +1821,7 @@ class _DevicesPageState extends State<DevicesPage> {
     required bool isHover,
     required VoidCallback onEnter,
     required VoidCallback onExit,
+    bool compact = false, // ✅ ADD THIS LINE
   }) {
     return MouseRegion(
       onEnter: (_) => onEnter(),
@@ -1744,7 +1832,10 @@ class _DevicesPageState extends State<DevicesPage> {
           duration: const Duration(milliseconds: 200),
           curve: Curves.easeOutCubic,
           transform: Matrix4.identity()..scale(isHover ? 1.03 : 1.0),
-          padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 12),
+          padding: EdgeInsets.symmetric(
+            vertical: compact ? 10 : 14,
+            horizontal: compact ? 16 : 12,
+          ),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
             color: Colors.red.withValues(alpha: isHover ? 0.18 : 0.12),
@@ -1762,6 +1853,7 @@ class _DevicesPageState extends State<DevicesPage> {
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: compact ? MainAxisSize.min : MainAxisSize.max,
             children: [
               Icon(icon, color: Colors.redAccent, size: 18),
               const SizedBox(width: 8),
@@ -2129,11 +2221,11 @@ class _DeviceCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         gradient: LinearGradient(
           colors: [
-            Colors.white.withOpacity(0.08),
-            Colors.white.withOpacity(0.03),
+            Colors.white.withValues(alpha: 0.08),
+            Colors.white.withValues(alpha: 0.03),
           ],
         ),
-        border: Border.all(color: Colors.white.withOpacity(0.08)),
+        border: Border.all(color: Colors.white.withValues(alpha: 0.08)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

@@ -70,7 +70,7 @@ class AppTheme {
     // =====================================================
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
-      fillColor: Colors.white.withOpacity(0.05),
+      fillColor: Colors.white.withValues(alpha: 0.05),
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(14),
         borderSide: BorderSide.none,
@@ -117,7 +117,7 @@ class AppTheme {
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
         foregroundColor: Colors.white,
-        side: BorderSide(color: Colors.white.withOpacity(0.2)),
+        side: BorderSide(color: Colors.white.withValues(alpha: 0.2)),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(14),
         ),
@@ -133,7 +133,7 @@ class AppTheme {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
       ),
-      color: Colors.white.withOpacity(0.05),
+      color: Colors.white.withValues(alpha: 0.05),
     ),
 
     // =====================================================
@@ -142,7 +142,7 @@ class AppTheme {
     switchTheme: SwitchThemeData(
       thumbColor: const WidgetStatePropertyAll(primary),
       trackColor: WidgetStatePropertyAll(
-        primary.withOpacity(0.4),
+        primary.withValues(alpha: 0.4),
       ),
     ),
 

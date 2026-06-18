@@ -27,6 +27,9 @@ dependencies:
   flutter_map: ^8.3.0
   latlong2: ^0.9.1
 
+  # ✅ ✅ IMPORTANT FIX (YOUR CRASH)
+  vector_math: ^2.1.4
+
   # ✅ Background tracking
   flutter_background_service: ^5.1.0
 
@@ -41,12 +44,11 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
   flutter_lints: ^6.0.0
 
 flutter:
   uses-material-design: true
 
-  # ✅ ✅ ✅ ASSETS (CRITICAL FIX ✅)
+  # ✅ ASSETS
   assets:
     - assets/images/

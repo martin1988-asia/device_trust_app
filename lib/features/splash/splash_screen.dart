@@ -118,7 +118,7 @@ class _SplashScreenState extends State<SplashScreen>
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               border: Border.all(
-                                color: Colors.blueAccent.withOpacity(0.18),
+                                color: Colors.blueAccent.withValues(alpha: 0.18),
                                 width: 2,
                               ),
                             ),
@@ -133,7 +133,7 @@ class _SplashScreenState extends State<SplashScreen>
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               border: Border.all(
-                                color: Colors.purpleAccent.withOpacity(0.12),
+                                color: Colors.purpleAccent.withValues(alpha: 0.12),
                                 width: 1.5,
                               ),
                             ),
@@ -146,7 +146,7 @@ class _SplashScreenState extends State<SplashScreen>
                           height: 210,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: Colors.blueAccent.withOpacity(0.04),
+                            color: Colors.blueAccent.withValues(alpha: 0.04),
                           ),
                         ),
 
@@ -179,10 +179,10 @@ class _SplashScreenState extends State<SplashScreen>
                             padding: const EdgeInsets.all(18),
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              color: Colors.white.withOpacity(0.08),
+                              color: Colors.white.withValues(alpha: 0.08),
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.black.withOpacity(0.4),
+                                  color: Colors.black.withValues(alpha: 0.4),
                                   blurRadius: 25,
                                   offset: const Offset(0, 10),
                                 )

@@ -93,7 +93,7 @@ class ConversationPage extends StatelessWidget {
               children: [
                 CircleAvatar(
                   radius: 26,
-                  backgroundColor: Colors.blueAccent.withOpacity(0.15),
+                  backgroundColor: Colors.blueAccent.withValues(alpha: 0.15),
                   child: const Icon(Icons.phone_android),
                 ),
                 Positioned(

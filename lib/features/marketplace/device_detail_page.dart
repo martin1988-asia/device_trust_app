@@ -89,13 +89,13 @@ class _DeviceDetailPageState extends State<DeviceDetailPage>
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(24),
-                        color: Colors.white.withOpacity(0.04),
+                        color: Colors.white.withValues(alpha: 0.04),
                         border: Border.all(
-                          color: Colors.white.withOpacity(0.08),
+                          color: Colors.white.withValues(alpha: 0.08),
                         ),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(0.6),
+                            color: Colors.black.withValues(alpha: 0.6),
                             blurRadius: 30,
                             offset: const Offset(0, 10),
                           ),
@@ -281,19 +281,19 @@ class _DeviceDetailPageState extends State<DeviceDetailPage>
               if (d.isClean)
                 Chip(
                   label: const Text("Clean"),
-                  backgroundColor: Colors.greenAccent.withOpacity(0.2),
+                  backgroundColor: Colors.greenAccent.withValues(alpha: 0.2),
                   labelStyle: const TextStyle(color: Colors.greenAccent),
                 ),
               if (d.isStolen)
                 Chip(
                   label: const Text("Stolen"),
-                  backgroundColor: Colors.redAccent.withOpacity(0.2),
+                  backgroundColor: Colors.redAccent.withValues(alpha: 0.2),
                   labelStyle: const TextStyle(color: Colors.redAccent),
                 ),
               if (d.isVerified)
                 Chip(
                   label: const Text("Verified"),
-                  backgroundColor: Colors.blueAccent.withOpacity(0.2),
+                  backgroundColor: Colors.blueAccent.withValues(alpha: 0.2),
                   labelStyle: const TextStyle(color: Colors.blueAccent),
                 ),
             ],
@@ -423,8 +423,8 @@ class _DeviceDetailPageState extends State<DeviceDetailPage>
   BoxDecoration _glassBox() {
     return BoxDecoration(
       borderRadius: BorderRadius.circular(16),
-      color: Colors.white.withOpacity(0.05),
-      border: Border.all(color: Colors.white.withOpacity(0.08)),
+      color: Colors.white.withValues(alpha: 0.05),
+      border: Border.all(color: Colors.white.withValues(alpha: 0.08)),
     );
   }
 
@@ -433,7 +433,7 @@ class _DeviceDetailPageState extends State<DeviceDetailPage>
       margin: const EdgeInsets.only(left: 6),
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.2),
+        color: color.withValues(alpha: 0.2),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Text(
